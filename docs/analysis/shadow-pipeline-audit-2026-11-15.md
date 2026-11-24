@@ -4,7 +4,7 @@
 
 This source review covers non-prediction services and deployment configuration, against the intended telemetry → twin → prediction → simulation → safety → Go controller pipeline. It is not a new experiment or physical deployment validation. The [synthetic trial](trial-01-synthetic-forecasting-2026-11-11.md) and [k3d testbed report](../../infrastructure/testbed/deployment-findings.md) retain their dates and provenance.
 
-## Findings
+## Findings recorded in commit `4254a09`
 
 1. **Forecast and simulation evidence are not bound on gateway approval.** `services/api-gateway/src/decisions/decisions.controller.ts` flattens the selected forecast into a metric and confidence, whereas `services/simulation-service/app/main.py` applies only fresh entries in `predicted.forecasts`. Confidence can reach safety while no forecast is applied. The gateway also does not check `feasible` before requesting approval. Require matching fresh forecast evidence and a feasible result for non-NOOP approval, with contract tests. This affects shadow decision integrity; the Go controller blocks live execution.
 2. **Normal telemetry does not establish independent fidelity or health.** `services/twin-manager/internal/sync/sync.go` creates node state without populating fidelity; `fidelity.Score` has no production caller. NATS ingestion in `services/twin-manager/cmd/twin/main.go` does not supply health. The gateway requires fresh healthy nodes and safety requires fidelity above 0.95, so normal telemetry alone cannot support non-NOOP approval. Independent, timestamped physical reference and health signals need validation; do not manufacture either value.
@@ -12,7 +12,11 @@ This source review covers non-prediction services and deployment configuration, 
 4. **Safety and audit state have operational limits.** Migration limits and pending reservations in `services/safety-service/safety_app/main.py` are process-local. The controller audit in `services/infrastructure-controller/internal/audit/audit.go` is bounded and only persistent when `DT_RAM_AUDIT_PATH` is configured. Compose configures a volume; the Kubernetes example does not. Restart and multi-instance behavior, durable outcomes, and idempotency require validation before live use.
 5. **The simulator is a model, not observed workload behavior.** `services/simulation-service/app/simulator.py` uses default service demand, latency and migration approximations; workload/SLO measurements are not supplied by the node event. `services/rl-service/cli.py` evaluates synthetic state and trains only when requested. PPO configuration and tuning must be recorded alongside actual evaluation; this audit does not claim an evaluated or tuned PPO run. Calibrate with measured workload and network data before deployment conclusions.
 
-## Existing protections and remaining boundary
+### Subsequent remediation of finding 1
+
+The gateway now forwards forecast provenance. For migration and placement approval it requires a feasible simulation of the requested action and a matching applied CPU or memory forecast for the destination. Scale and resource-adjust requests fail closed on this approval path. The independent fidelity, health and operational evidence gaps remain open. [Gateway remediation in PR #16](https://github.com/Roonil03/DT_RAM/pull/16)
+
+## Protections and remaining boundary at the time of the audit
 
 The Node gateway routes approval to safety; the experiment service stores experiment records. Go telemetry publishes node observations, and the twin tracks freshness. The safety service publishes only shadow decisions. The controller's `internal/decision/processor.go` validates and audits decisions and explicitly refuses live actuation even if dry-run is disabled. The low-level executor's scaling primitive is not called by that processor; migration and placement execution are unavailable. Go and Python gates include fidelity, confidence, SLO, health and migration controls, but inputs are not authoritative end-to-end. Independent workload telemetry, counterfactual and safety evidence, rollback, and observed outcomes remain prerequisites for live mode.
 

@@ -1,6 +1,8 @@
 # DT-RAM skeptical review report
 
-This review uses the five dimensions from the research-writing skill's adversarial review guidance. It is a paper-preparation review, not a venue acceptance prediction.
+Historical paper-preparation review added on 2026-11-02, associated with the snapshot recorded in the [claim–evidence matrix](claim-evidence-matrix.md) at observed repository commit `8083b49`. Findings, draft checks and environment observations below describe that review, not the current checkout. The review uses the five dimensions from the research-writing skill's adversarial review guidance; it is not a venue acceptance prediction.
+
+For later evidence, see the [shadow pipeline audit](../analysis/shadow-pipeline-audit-2026-11-15.md), [completed Bitbrains forecasting and synthetic PPO report](../analysis/bitbrains-02-2026-11-15.md), and [evidence index](../analysis/README.md). The earlier statements about forecast dynamics and absent PPO comparisons do not describe the later implementation and synthetic evaluation. Those later experiments still do not establish live resource-management benefit.
 
 | Dimension | Assessment | Required treatment in the paper |
 |---|---|---|
@@ -12,7 +14,7 @@ This review uses the five dimensions from the research-writing skill's adversari
 
 ## Independent final checks
 
-Independent Luna reviews of the final draft found the implementation and forecast claims consistent with the code and stored artifacts. The formatting review confirmed that every citation key resolves, the conference structure and table styling are consistent with IEEEtran conventions, and source-level braces/environments are balanced. No LaTeX compiler was available, so a PDF build and visual layout inspection remain outstanding. The author field currently says “DT-RAM Project Team”; replace it with the actual author names and affiliations before submission.
+Independent Luna reviews of the draft at that stage found the implementation and forecast claims consistent with the code and stored artifacts. The formatting review reported that every citation key resolved, the conference structure and table styling were consistent with IEEEtran conventions, and source-level braces/environments were balanced. No LaTeX compiler was available during that review, so it did not include a PDF build or visual layout inspection. The author field at that stage said “DT-RAM Project Team”; replace it with the actual author names and affiliations before submission.
 
 ## Final adversarial questions
 

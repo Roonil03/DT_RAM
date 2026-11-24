@@ -1,3 +1,3 @@
 ﻿# Research Paper: Related Work
 
-Survey of Digital Twins in Edge Computing and RL resource management.
+The historical paper's Related Work section is maintained in [`main.tex`](main.tex). See the [literature validation notes](literature-validation.md) for source records, relevance and limits, and the [bibliography](references.bib) for citation metadata.

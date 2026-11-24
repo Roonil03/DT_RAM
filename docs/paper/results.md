@@ -1,11 +1,13 @@
 ﻿# Research Paper: Results & Discussion
 
-Empirical evaluation, ablation study, and decision regret analysis.
+Historical summary of the preliminary k3d CPU forecasting comparison. This study did not include an ablation study or decision regret analysis; later offline experiments are listed in the [evidence index](../analysis/README.md).
 
 ## Forecasting evaluation on recorded k3d telemetry
 
-Seven forecasting approaches were evaluated on 5,004 real node samples from
-the three-node k3d testbed using chronological 60/20/20 partitions and 5, 10,
+Seven forecasting approaches were evaluated on 5,004 telemetry events labeled
+with three k3d node IDs. CPU and memory measurements were host-scoped, so the
+capture does not represent three independent physical nodes. The comparison
+used chronological 60/20/20 partitions and 5, 10,
 30, and 60 second horizons. Missing one-second buckets were not imputed. The
 documented 60-sample history yielded no valid windows, so the comparison used
 a 20-sample history and records this deviation explicitly.

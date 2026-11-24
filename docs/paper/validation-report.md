@@ -2,7 +2,11 @@
 
 ## Scope
 
-This report synthesizes five independent read-only audits (implementation, recorded results, methodology, cloud integration, and academic literature) plus direct inspection of repository artifacts. The working tree was clean before paper artifacts were created. No application tests or experiments were run during validation; historical logs are distinguished from direct artifact checks.
+Historical paper-preparation record added on 2026-11-02, associated with the snapshot recorded in the [claim–evidence matrix](claim-evidence-matrix.md) at observed repository commit `8083b49`. The implementation findings and environment observations below describe that review, not the current checkout.
+
+This report synthesized five independent read-only audits (implementation, recorded results, methodology, cloud integration, and academic literature) plus direct inspection of repository artifacts. The working tree was clean before paper artifacts were created. No application tests or experiments were run during validation; historical logs were distinguished from direct artifact checks.
+
+Later evidence is recorded in the [shadow pipeline audit](../analysis/shadow-pipeline-audit-2026-11-15.md), [completed Bitbrains forecasting and synthetic PPO report](../analysis/bitbrains-02-2026-11-15.md), and [evidence index](../analysis/README.md). The forecast-dynamics, RL-environment and unevaluated-PPO statements below apply to the earlier snapshot. The shadow audit also records the later optional bounded persistent controller snapshot; it does not establish a durable, distributed, outcome-complete audit.
 
 ## Independent findings
 
@@ -28,7 +32,7 @@ Primary publisher and institutional records confirm prior DT-assisted RL resourc
 
 ## Evidence quality and reproducibility limits
 
-The recorded dataset hash and model source/run metadata are useful provenance. But the dataset itself and neural weights are absent from the checkout. The capture report's original base commit, the forecast evaluator commit, and the current merged repository commit differ; the paper reports those as provenance for their respective artifacts rather than implying the evaluated model was produced from the current merge. Historical test reports describe passing suites but are not current-commit reruns. No LaTeX compiler was found on PATH during the environment check, so PDF compilation is unavailable in this session.
+The recorded dataset hash and model source/run metadata are useful provenance. But the dataset itself and neural weights were absent from the reviewed checkout. The capture report's original base commit, the forecast evaluator commit, and the repository commit observed during review differ; the paper reports those as provenance for their respective artifacts rather than implying the evaluated model was produced from that merge. Historical test reports describe passing suites but were not rerun during this review. No LaTeX compiler was found on PATH during that review's environment check, so it did not include PDF compilation.
 
 ## Validation conclusion
 
