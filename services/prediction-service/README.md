@@ -13,12 +13,16 @@ Use Python 3.11 in an isolated environment. From this directory:
 ```text
 py -3.11 -m venv .venv
 .venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.venv\Scripts\python.exe -m unittest discover -s tests -v
+.venv\Scripts\python.exe -m prediction_app.collector --help
 ```
 
 Use the corresponding `python3` and virtual-environment paths on Linux.
 `requirements.txt` is for the runtime image; `requirements-dev.txt` adds the
 HTTP test client and benchmark dependency. The repository ignores `.venv/`.
+The help command checks the collector's imports and CLI without recording data.
+Test sources are deliberately not versioned. If the local `tests/` sources are
+available, run `.venv\Scripts\python.exe -m unittest discover -s tests -v`;
+a fresh clone does not include that suite.
 
 ## Record telemetry
 
@@ -175,9 +179,12 @@ on the intended hardware using real recorded telemetry.
 The Dockerfile starts the API on port 5000 as a non-root user. Mount writable
 `/data` for recorded samples and `/models` for reviewed artifacts, supply the
 service token through the deployment environment, and run the collector as a
-separate process. This repository does not yet have a verified prediction
-service Compose/Kubernetes deployment. Shared stream provisioning, gateway
-contract wiring, and RL consumption are integration work.
+separate process. The [Compose stack](../../infrastructure/docker/docker-compose.yml)
+defines the API and collector with a shared SQLite volume, mounts model artifacts
+separately, and points the gateway at the prediction API. These are configured
+integration paths; runtime deployment validation, a prediction Kubernetes
+deployment, and RL forecast consumption remain unverified. See the
+[infrastructure guide](../../infrastructure/README.md) for the local stack.
 
 An optional one-shot publisher proposes `NODE_FORECAST_UPDATED` events on
 `dt.predictions.node_forecast` using the same forecast objects as the API.
