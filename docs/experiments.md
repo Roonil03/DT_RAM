@@ -1,6 +1,8 @@
 # Experimental Design & Benchmark Protocol
 
-Evaluation metrics include SLOVR, CDA, Decision Regret, and baseline comparisons.
+Offline forecasting reports MAE, RMSE, MAPE, and R² where defined. Optional
+synthetic policy metrics and baseline comparisons are described below; these
+simulator results do not establish live infrastructure outcomes.
 
 ## Offline Model run
 
@@ -58,7 +60,7 @@ scenarios with seeds 42 and 43. The seven-model sweep completed all jobs, but
 each generated fixture contains only one synthetic node and 1,800 samples.
 The comparison is an offline runner and metric-path check, not a real-cluster
 benchmark or research result. The run metadata reports a dirty working tree
-and unavailable commit identifiers in per-model records;. The saved
+and unavailable commit identifiers in per-model records. The saved
 interval results have one calibration sample per horizon, so uncertainty
 calibration and coverage are unavailable. See the [sanitized trial report](analysis/trial-01-synthetic-forecasting-2026-11-11.md)
 for per-seed and per-scenario results, provenance, software versions, and
