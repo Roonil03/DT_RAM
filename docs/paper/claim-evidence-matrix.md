@@ -1,6 +1,8 @@
 # DT-RAM claim–evidence matrix
 
-Prepared after repository review and independent code, results, method, cloud integration, and academic audits. The matrix describes evidence present in the current checkout; it does not claim fresh execution of historical test reports.
+Historical paper-preparation record added on 2026-11-02. The matrix describes the review snapshot at observed repository commit `8083b49`, not the current implementation or all later experiments. No historical tests were rerun for that review.
+
+Later implementation and offline evidence are documented in the [shadow pipeline audit](../analysis/shadow-pipeline-audit-2026-11-15.md), [completed Bitbrains forecasting and synthetic PPO report](../analysis/bitbrains-02-2026-11-15.md), and [evidence index](../analysis/README.md). In particular, the forecast-dynamics and PPO statements below describe the earlier snapshot; they must not be read as current-code findings or as denying the later synthetic PPO evaluation.
 
 | Candidate claim | Evidence | Status and permitted wording |
 |---|---|---|
@@ -19,7 +21,7 @@ Prepared after repository review and independent code, results, method, cloud in
 
 ## Provenance and checks
 
-- Current repository commit observed: `8083b49` (merge of PR #9); worktree was clean during review.
+- Repository commit observed during the historical review: `8083b49` (merge of PR #9); worktree was clean during review.
 - Forecast artifacts identify evaluation commit `bb4764672d08d6d9d82a5d785be058cda4c467a6` and a clean tree at run time.
 - Dataset manifest SHA-256: `acbbdfed5414a141d186c215bc95bc9dbb6179d228c783609377e8a0d9931f4f`.
 - Independent audit recomputed four-horizon average RMSE values and confirmed three calibration residuals per model per horizon.
