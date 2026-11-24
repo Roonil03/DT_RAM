@@ -23,7 +23,10 @@ Fidelity must exceed 0.95 and prediction confidence must be at least 0.80;
 missing or non-finite confidence is rejected.
 
 HTTP and NATS decisions share the same audit pipeline. `decision_id` is required
-for execution requests; reused IDs return 409 over HTTP. Audit is in memory.
+for execution requests; reused IDs return 409 over HTTP. Audit is in memory
+unless `DT_RAM_AUDIT_PATH` is set. Compose configures a JSON snapshot on the
+`controller-audit` volume and restores it at startup. The snapshot retains up to
+10,000 decisions; distributed, outcome-complete audit remains unimplemented.
 Twin state uses memory by default; set REDIS_ADDR for write-through persistence
 and startup restoration. Configured Redis failures reject updates; restoration
 failures stop startup. Deploy one twin-manager writer: hot reads are local.
@@ -77,7 +80,11 @@ prediction API; model artifacts are mounted separately. The RL service is
 available only under the `experiments` profile and runs the reproducible CLI,
 not Jupyter.
 The Helm directory remains a values/chart scaffold, without install templates.
-For cluster-free manifest regression checks, run `go test ./...` in infrastructure.
+Test sources are deliberately not versioned. With the local test sources
+available, run `go test ./...` in `infrastructure` for cluster-free manifest
+regression checks. A fresh clone does not include those checks. For a source
+build check, run `go build ./...` from each of `services/telemetry-agent`,
+`services/twin-manager`, and `services/infrastructure-controller`.
 
 Go services load optional `configs/config.yaml` relative to their working
 directory; images copy these files into /app/configs. Telemetry accepts equal,
@@ -102,11 +109,14 @@ handled decisions (including rejections) are acknowledged.
 
 An agent with TELEMETRY_PUBLISH_ENABLED=true exits when JetStream cannot be
 initialized. Twin/controller may start HTTP-only when NATS is absent at startup;
-restart them after NATS returns. Stream/subscription setup failures are logged.
+restart them after NATS returns. After connecting, JetStream or stream
+initialization failures stop twin/controller startup. Subscription setup failures
+are logged while HTTP serving continues.
 
 All three Go services expose `/metrics`. Twin metrics report node/stale counts;
 controller metrics report current audit/rejection counts. Telemetry gauges
 update during periodic sampling as well as GET /collect.
 
-To run the optional JetStream test against an isolated local server, set
-NATS_TEST_URL and run `go test ./internal/publisher` in telemetry-agent.
+With the local test sources available, run the optional JetStream test against
+an isolated local server by setting NATS_TEST_URL and running
+`go test ./internal/publisher` in `services/telemetry-agent`.
